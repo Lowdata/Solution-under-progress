@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-CPIP Issues - Digital Content Provenance & Integrity Protocol Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .accordion-button.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-sky-600">D-CPIP Explorer</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link font-medium pb-1">Home</a>
+                <a href="roadmap.html" class="nav-link font-medium pb-1">Roadmap</a>
+                <a href="#issues" class="nav-link font-medium pb-1 active">Issues</a>
+            </div>
+        </nav>
+    </header>
+    <main class="container mx-auto px-6 py-12">
+        <section id="issues" class="mb-20">
+            <h2 class="text-4xl font-bold text-center mb-4">Potential Issues & Things Not Figured Out</h2>
+            <p class="text-lg text-slate-600 text-center mb-12 max-w-4xl mx-auto">While D-CPIP has strong foundations, there are challenges and unknowns. This page outlines them with expandable sections.</p>
+            <div id="issues-container" class="max-w-4xl mx-auto space-y-6"></div>
+        </section>
+    </main>
+    <footer class="bg-slate-800 text-slate-400 mt-20">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>D-CPIP Explorer: Issues</p>
+            <p class="text-sm">Part of the Digital Content Provenance & Integrity Protocol project.</p>
+        </div>
+    </footer>
+    <script>
+        const issuesData = [
+            {
+                title: 'Potential Issues',
+                sections: [
+                    {
+                        subtitle: 'Scalability & Cost',
+                        content: 'Blockchain writes for every video could be expensive. Layer 2 solutions help, but high-volume uploads may still strain resources.'
+                    },
+                    {
+                        subtitle: 'Privacy Concerns',
+                        content: 'Embedding metadata might expose creator identities. Zero-knowledge proofs could mitigate, but implementation is complex.'
+                    },
+                    {
+                        subtitle: 'Platform Adoption',
+                        content: 'Without major platforms (YouTube, Meta) integrating, the system remains niche. Incentives like liability protection are needed.'
+                    }
+                ]
+            },
+            {
+                title: 'Things Not Figured Out',
+                sections: [
+                    {
+                        subtitle: 'Real-Time Streaming Verification',
+                        content: 'How to verify video streams without buffering delays? Custom protocols or browser APIs may be required.'
+                    },
+                    {
+                        subtitle: 'Cross-Platform Compatibility',
+                        content: 'Ensuring verification works on all devices (mobile, desktop). Browser extensions help, but native app support is unclear.'
+                    },
+                    {
+                        subtitle: 'Adversarial Attacks on Watermarks',
+                        content: 'AI could be trained to remove watermarks. Ongoing research into robust, adaptive methods is needed.'
+                    }
+                ]
+            }
+        ];
+
+        const issuesContainer = document.getElementById('issues-container');
+        issuesData.forEach(category => {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden';
+            categoryDiv.innerHTML = `
+                <h3 class="font-bold text-xl text-sky-600 p-6 border-b">${category.title}</h3>
+                <div class="p-6 space-y-4">
+                    ${category.sections.map(section => `
+                        <div>
+                            <button class="accordion-button w-full text-left font-semibold text-slate-700 hover:bg-slate-50 p-3 rounded" onclick="toggleSection(this)">
+                                ${section.subtitle}
+                                <span class="accordion-icon text-sky-500 float-right">▾</span>
+                            </button>
+                            <div class="accordion-content hidden p-3 pt-0 text-slate-600">${section.content}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            issuesContainer.appendChild(categoryDiv);
+        });
+
+        function toggleSection(button) {
+            const content = button.nextElementSibling;
+            button.classList.toggle('open');
+            content.classList.toggle('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-CPIP Roadmap - Digital Content Provenance & Integrity Protocol Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .milestone-header {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .milestone-header:hover {
+            background-color: #e0f2fe;
+        }
+        .milestone-content {
+            transition: max-height 0.3s ease-in-out;
+            overflow: hidden;
+        }
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+        .checkbox-custom {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e1;
+            border-radius: 4px;
+            background-color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .checkbox-custom:checked {
+            background-color: #0ea5e9;
+            border-color: #0ea5e9;
+        }
+        .checkbox-custom:checked::after {
+            content: '✓';
+            color: white;
+            font-weight: bold;
+            display: block;
+            text-align: center;
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #0ea5e9;
+            transition: width 0.3s;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-sky-600">D-CPIP Explorer</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="nav-link font-medium pb-1">Home</a>
+                <a href="#roadmap" class="nav-link font-medium pb-1 active">Roadmap</a>
+                <a href="issues.html" class="nav-link font-medium pb-1">Issues</a>
+            </div>
+        </nav>
+    </header>
+    <main class="container mx-auto px-6 py-12">
+        <section id="roadmap" class="mb-20">
+            <h2 class="text-4xl font-bold text-center mb-4">Development Roadmap</h2>
+            <p class="text-lg text-slate-600 text-center mb-12 max-w-4xl mx-auto">A step-by-step guide to building the D-CPIP prototype. Each milestone includes sub-tasks—check them off as you progress. Use your MacBook Air M4 for setup and PC for GPU tasks.</p>
+            
+            <!-- Architecture Diagram -->
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 mb-12">
+                <h3 class="text-2xl font-bold text-center mb-6">D-CPIP System Architecture Diagram</h3>
+                <p class="text-slate-600 text-center mb-6">This diagram shows the high-level components. Tasks reference parts (e.g., "See Diagram: Ledger").</p>
+                <svg width="100%" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Arrows and Connections -->
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#0ea5e9" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Component 1: Content Registration -->
+                    <rect x="50" y="150" width="120" height="80" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2" rx="10"/>
+                    <text x="110" y="180" text-anchor="middle" font-size="12" fill="#1e293b">Content Registration</text>
+                    <text x="110" y="195" text-anchor="middle" font-size="10" fill="#64748b">See Diagram: Registration</text>
+                    <text x="110" y="210" text-anchor="middle" font-size="10" fill="#64748b">Hashes videos, embeds metadata</text>
+                    
+                    <!-- Arrow to Ledger -->
+                    <line x1="170" y1="190" x2="250" y2="190" stroke="#0ea5e9" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <!-- Component 2: Blockchain Ledger -->
+                    <rect x="250" y="150" width="120" height="80" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" rx="10"/>
+                    <text x="310" y="180" text-anchor="middle" font-size="12" fill="#1e293b">Blockchain Ledger</text>
+                    <text x="310" y="195" text-anchor="middle" font-size="10" fill="#64748b">See Diagram: Ledger</text>
+                    <text x="310" y="210" text-anchor="middle" font-size="10" fill="#64748b">Stores immutable hashes</text>
+                    
+                    <!-- Arrow to API -->
+                    <line x1="370" y1="190" x2="450" y2="190" stroke="#0ea5e9" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <!-- Component 3: Verification API -->
+                    <rect x="450" y="150" width="120" height="80" fill="#dcfce7" stroke="#10b981" stroke-width="2" rx="10"/>
+                    <text x="510" y="180" text-anchor="middle" font-size="12" fill="#1e293b">Verification API</text>
+                    <text x="510" y="195" text-anchor="middle" font-size="10" fill="#64748b">See Diagram: API</text>
+                    <text x="510" y="210" text-anchor="middle" font-size="10" fill="#64748b">Compares hashes in real-time</text>
+                    
+                    <!-- Arrow to UI -->
+                    <line x1="570" y1="190" x2="650" y2="190" stroke="#0ea5e9" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <!-- Component 4: UI/Viewer -->
+                    <rect x="650" y="150" width="120" height="80" fill="#f3e8ff" stroke="#8b5cf6" stroke-width="2" rx="10"/>
+                    <text x="710" y="180" text-anchor="middle" font-size="12" fill="#1e293b">UI/Viewer</text>
+                    <text x="710" y="195" text-anchor="middle" font-size="10" fill="#64748b">See Diagram: UI</text>
+                    <text x="710" y="210" text-anchor="middle" font-size="10" fill="#64748b">Displays verification status</text>
+                    
+                    <!-- Vertical Arrows for Watermarking -->
+                    <line x1="200" y1="230" x2="200" y2="310" stroke="#0ea5e9" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    <line x1="500" y1="230" x2="500" y2="310" stroke="#0ea5e9" stroke-width="2" marker-end="url(#arrowhead)"/>
+                    
+                    <!-- Component 5: Watermarking Layer -->
+                    <rect x="150" y="310" width="300" height="60" fill="#fee2e2" stroke="#ef4444" stroke-width="2" rx="10"/>
+                    <text x="300" y="340" text-anchor="middle" font-size="12" fill="#1e293b">Watermarking Layer</text>
+                    <text x="300" y="355" text-anchor="middle" font-size="10" fill="#64748b">Embeds invisible signatures</text>
+                    
+                    <!-- Central Hub -->
+                    <circle cx="400" cy="100" r="40" fill="#dbeafe" stroke="#3b82f6" stroke-width="3"/>
+                    <text x="400" y="105" text-anchor="middle" font-size="14" font-weight="bold" fill="#1e293b">D-CPIP Core</text>
+                </svg>
+            </div>
+            
+            <button id="export-roadmap" class="mb-8 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700">Export Roadmap Summary</button>
+            <div id="roadmap-container" class="max-w-4xl mx-auto space-y-6"></div>
+        </section>
+    </main>
+    <footer class="bg-slate-800 text-slate-400 mt-20">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>D-CPIP Explorer: Roadmap</p>
+            <p class="text-sm">Part of the Digital Content Provenance & Integrity Protocol project.</p>
+        </div>
+    </footer>
+    <script>
+        // Load saved progress from localStorage
+        function loadProgress() {
+            const saved = localStorage.getItem('dcpip-roadmap-progress');
+            return saved ? JSON.parse(saved) : {};
+        }
+
+        // Save progress to localStorage
+        function saveProgress() {
+            const progress = {};
+            document.querySelectorAll('.milestone-card').forEach((card, index) => {
+                const tasks = roadmapData[index].tasks;
+                progress[index] = tasks.map(task => task.completed);
+            });
+            localStorage.setItem('dcpip-roadmap-progress', JSON.stringify(progress));
+        }
+
+        const roadmapData = [
+            {
+                title: '1. Environment Setup & Tools',
+                description: 'Prepare your local development environment. See Diagram: Registration (for tools like FFmpeg).',
+                tips: 'Use your MacBook Air for quick installs. Test everything before proceeding.',
+                tasks: [
+                    { text: 'Install Node.js (v18+) and Python (v3.10+)', completed: false, time: '15 min', difficulty: 'Easy', tooltip: 'Required for scripting. See: nodejs.org', ref: 'Diagram: Registration' },
+                    { text: 'Set up project folder and initialize Git repo', completed: false, time: '5 min', difficulty: 'Easy', tooltip: 'Run: mkdir dcpip && cd dcpip && git init', ref: 'Diagram: Registration' },
+                    { text: 'Install FFmpeg for video processing and OpenCV for frame extraction', completed: false, time: '20 min', difficulty: 'Medium', tooltip: 'Use pip install opencv-python. See: ffmpeg.org', ref: 'Diagram: Registration' },
+                    { text: 'Set up blockchain testnet (e.g., Ganache for Ethereum)', completed: false, time: '30 min', difficulty: 'Medium', tooltip: 'Install via npm. See: trufflesuite.com/ganache', ref: 'Diagram: Ledger' },
+                    { text: 'Install IPFS for decentralized storage', completed: false, time: '15 min', difficulty: 'Easy', tooltip: 'Run: npm install ipfs. See: ipfs.io', ref: 'Diagram: Ledger' }
+                ]
+            },
+            {
+                title: '2. Core Cryptographic Implementation',
+                description: 'Implement hashing and signing for video authenticity. See Diagram: Registration.',
+                tips: 'Start with small videos to test. Use secure keys.',
+                tasks: [
+                    { text: 'Generate SHA-256 hashes for sample videos using Python/Node.js', completed: false, time: '30 min', difficulty: 'Medium', tooltip: 'Use hashlib in Python. See: docs.python.org', ref: 'Diagram: Registration' },
+                    { text: 'Implement digital signatures using Ed25519', completed: false, time: '45 min', difficulty: 'Hard', tooltip: 'Use PyCryptodome. See: pycryptodome.readthedocs.io', ref: 'Diagram: Registration' },
+                    { text: 'Integrate C2PA libraries for embedding Content Credentials', completed: false, time: '60 min', difficulty: 'Hard', tooltip: 'Clone Adobe CAI repo. See: github.com/adobe/content-authenticity-initiative', ref: 'Diagram: Registration' },
+                    { text: 'Test hash/signing on 5-10 videos', completed: false, time: '20 min', difficulty: 'Medium', tooltip: 'Automate with scripts.', ref: 'Diagram: Registration' },
+                    { text: 'Add metadata embedding (timestamp, creator ID)', completed: false, time: '25 min', difficulty: 'Medium', tooltip: 'Use JSON manifests.', ref: 'Diagram: Registration' }
+                ]
+            },
+            {
+                title: '3. Blockchain Integration',
+                description: 'Anchor content hashes on a distributed ledger. See Diagram: Ledger.',
+                tips: 'Use testnets to avoid costs. Monitor gas fees.',
+                tasks: [
+                    { text: 'Deploy smart contract on Ethereum testnet for hash registration', completed: false, time: '60 min', difficulty: 'Hard', tooltip: 'Use Solidity. See: ethereum.org', ref: 'Diagram: Ledger' },
+                    { text: 'Write API endpoints to register video hashes', completed: false, time: '45 min', difficulty: 'Medium', tooltip: 'Use Express.js. Depends on: Previous tasks.', ref: 'Diagram: Ledger' },
+                    { text: 'Build lookup service to query blockchain', completed: false, time: '30 min', difficulty: 'Medium', tooltip: 'Use web3.js. Depends on: Smart contract.', ref: 'Diagram: Ledger' },
+                    { text: 'Test end-to-end: Register, edit, verify mismatch', completed: false, time: '40 min', difficulty: 'Medium', tooltip: 'Simulate edits with FFmpeg.', ref: 'Diagram: Ledger' },
+                    { text: 'Optimize for cost (e.g., use Layer 2)', completed: false, time: '50 min', difficulty: 'Hard', tooltip: 'Switch to Polygon. See: polygon.technology', ref: 'Diagram: Ledger' }
+                ]
+            },
+            {
+                title: '4. Watermarking & Detection',
+                description: 'Add robust watermarking to survive edits. See Diagram: Registration.',
+                tips: 'Use your PC GPU for ML tasks. Test on various edits.',
+                tasks: [
+                    { text: 'Integrate Meta\'s Video Seal or similar for invisible watermarks (use PC GPU)', completed: false, time: '90 min', difficulty: 'Hard', tooltip: 'Fork GitHub repo. See: github.com/facebookresearch/VideoSeal', ref: 'Diagram: Registration' },
+                    { text: 'Embed watermarks in sample videos and test against compression', completed: false, time: '60 min', difficulty: 'Medium', tooltip: 'Use Python scripts.', ref: 'Diagram: Registration' },
+                    { text: 'Implement detection API for watermark presence', completed: false, time: '50 min', difficulty: 'Medium', tooltip: 'Build with TensorFlow.', ref: 'Diagram: API' },
+                    { text: 'Add visible QR code overlay linking to blockchain', completed: false, time: '30 min', difficulty: 'Easy', tooltip: 'Use qrcode library.', ref: 'Diagram: UI' },
+                    { text: 'Benchmark on 20+ edited videos', completed: false, time: '70 min', difficulty: 'Medium', tooltip: 'Automate testing.', ref: 'Diagram: Registration' }
+                ]
+            },
+            {
+                title: '5. Verification API & UI',
+                description: 'Build user-facing tools for verification. See Diagram: API & UI.',
+                tips: 'Focus on real-time performance. Get user feedback early.',
+                tasks: [
+                    { text: 'Create REST API for real-time hash comparison', completed: false, time: '60 min', difficulty: 'Medium', tooltip: 'Use FastAPI. Depends on: Blockchain tasks.', ref: 'Diagram: API' },
+                    { text: 'Build web UI for uploading and showing verification results', completed: false, time: '80 min', difficulty: 'Medium', tooltip: 'Use React or plain JS.', ref: 'Diagram: UI' },
+                    { text: 'Add browser extension prototype for automatic verification', completed: false, time: '90 min', difficulty: 'Hard', tooltip: 'Use WebExtensions API.', ref: 'Diagram: UI' },
+                    { text: 'Implement visual indicators (green/red)', completed: false, time: '40 min', difficulty: 'Easy', tooltip: 'Add CSS classes.', ref: 'Diagram: UI' },
+                    { text: 'Test UI/UX with 10 users', completed: false, time: '120 min', difficulty: 'Medium', tooltip: 'Gather feedback.', ref: 'Diagram: UI' }
+                ]
+            },
+            {
+                title: '6. Clip Attribution & Context',
+                description: 'Enable fair use while preserving context. See Diagram: API.',
+                tips: 'Ensure legal compliance. Test with real clips.',
+                tasks: [
+                    { text: 'Develop script to trim videos and append metadata', completed: false, time: '50 min', difficulty: 'Medium', tooltip: 'Use FFmpeg for trimming.', ref: 'Diagram: API' },
+                    { text: 'Implement chained verification for clips', completed: false, time: '60 min', difficulty: 'Hard', tooltip: 'Link to original hashes. Depends on: Blockchain.', ref: 'Diagram: API' },
+                    { text: 'Add context window to clip metadata', completed: false, time: '40 min', difficulty: 'Medium', tooltip: 'Include transcripts.', ref: 'Diagram: API' },
+                    { text: 'Test clip editing workflow', completed: false, time: '30 min', difficulty: 'Medium', tooltip: 'Manual testing.', ref: 'Diagram: API' },
+                    { text: 'Ensure compliance with fair use', completed: false, time: '45 min', difficulty: 'Medium', tooltip: 'Review legal docs.', ref: 'Diagram: API' }
+                ]
+            },
+            {
+                title: '7. Testing & Iteration',
+                description: 'Rigorously test for reliability. See Diagram: All.',
+                tips: 'Automate tests. Document issues.',
+                tasks: [
+                    { text: 'Simulate attacks and confirm detection', completed: false, time: '80 min', difficulty: 'Hard', tooltip: 'Use adversarial examples.', ref: 'Diagram: All' },
+                    { text: 'Performance test for sub-second response', completed: false, time: '50 min', difficulty: 'Medium', tooltip: 'Use profiling tools.', ref: 'Diagram: API' },
+                    { text: 'Cross-platform test on Mac/PC', completed: false, time: '60 min', difficulty: 'Medium', tooltip: 'Run on both machines.', ref: 'Diagram: All' },
+                    { text: 'Gather beta feedback from users', completed: false, time: '90 min', difficulty: 'Easy', tooltip: 'Share prototype.', ref: 'Diagram: UI' },
+                    { text: 'Refine based on issues', completed: false, time: 'Variable', difficulty: 'Medium', tooltip: 'Iterate quickly.', ref: 'Diagram: All' }
+                ]
+            },
+            {
+                title: '8. Scaling & Deployment',
+                description: 'Prepare for production. See Diagram: All.',
+                tips: 'Plan for costs. Engage community.',
+                tasks: [
+                    { text: 'Migrate to production blockchain', completed: false, time: '120 min', difficulty: 'Hard', tooltip: 'Switch to mainnet.', ref: 'Diagram: Ledger' },
+                    { text: 'Set up cloud hosting for API and IPFS', completed: false, time: '80 min', difficulty: 'Medium', tooltip: 'Use AWS/Heroku.', ref: 'Diagram: API' },
+                    { text: 'Document codebase for open-source release', completed: false, time: '60 min', difficulty: 'Easy', tooltip: 'Write README.', ref: 'Diagram: All' },
+                    { text: 'Propose integration with C2PA standards', completed: false, time: '90 min', difficulty: 'Medium', tooltip: 'Submit proposals.', ref: 'Diagram: Registration' },
+                    { text: 'Plan for community contributions', completed: false, time: '50 min', difficulty: 'Easy', tooltip: 'Set up GitHub issues.', ref: 'Diagram: All' }
+                ]
+            }
+        ];
+
+        const roadmapContainer = document.getElementById('roadmap-container');
+        roadmapData.forEach((milestone, index) => {
+            const savedProgress = loadProgress();
+            if (savedProgress[index]) {
+                milestone.tasks.forEach((task, taskIndex) => {
+                    task.completed = savedProgress[index][taskIndex] || false;
+                });
+            }
+
+            const milestoneCard = document.createElement('div');
+            milestoneCard.className = 'milestone-card bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden';
+            
+            const completedTasks = milestone.tasks.filter(task => task.completed).length;
+            const totalTasks = milestone.tasks.length;
+            const progressPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+            milestoneCard.innerHTML = `
+                <div class="milestone-header p-6 border-b border-slate-200" onclick="toggleMilestone(this)">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="font-bold text-xl text-sky-600">${milestone.title}</h4>
+                        <span class="accordion-icon text-sky-500 text-2xl font-light transform transition-transform">▾</span>
+                    </div>
+                    <p class="text-slate-600 mb-2">${milestone.description}</p>
+                    <div class="progress-bar mb-2">
+                        <div class="progress-fill" style="width: ${progressPercentage}%"></div>
+                    </div>
+                    <p class="text-sm text-slate-500">Progress: ${progressPercentage}% (${completedTasks}/${totalTasks} completed)</p>
+                    <p class="text-sm text-slate-500 mt-2"><strong>Tips:</strong> ${milestone.tips}</p>
+                </div>
+                <div class="milestone-content p-6 max-h-0">
+                    <ul class="space-y-3">
+                        ${milestone.tasks.map((task, taskIndex) => `
+                            <li class="flex items-start space-x-3">
+                                <input type="checkbox" class="checkbox-custom mt-1" ${task.completed ? 'checked' : ''} onchange="updateProgress()" data-task="${index}-${taskIndex}">
+                                <div class="flex-1">
+                                    <span class="text-slate-700">${task.text} (${task.time}, ${task.difficulty})</span>
+                                    <div class="tooltip">
+                                        <span class="text-sky-600 cursor-help">ℹ️</span>
+                                        <span class="tooltiptext">${task.tooltip}</span>
+                                    </div>
+                                    <p class="text-xs text-slate-500">${task.ref}</p>
+                                </div>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `;
+            roadmapContainer.appendChild(milestoneCard);
+        });
+
+        function toggleMilestone(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            if (content.style.maxHeight === '0px' || !content.style.maxHeight) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.style.maxHeight = '0px';
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        function updateProgress() {
+            saveProgress();
+            // Update progress bars
+            document.querySelectorAll('.milestone-card').forEach((card, index) => {
+                const tasks = roadmapData[index].tasks;
+                const completedTasks = tasks.filter(task => task.completed).length;
+                const totalTasks = tasks.length;
+                const progressPercentage = Math.round((completedTasks / totalTasks) * 100);
+                const progressSpan = card.querySelector('.milestone-header .text-slate-500');
+                progressSpan.textContent = `Progress: ${progressPercentage}% (${completedTasks}/${totalTasks} completed)`;
+                card.querySelector('.progress-fill').style.width = `${progressPercentage}%`;
+            });
+        }
+
+        // Export functionality
+        document.getElementById('export-roadmap').addEventListener('click', () => {
+            let summary = 'D-CPIP Roadmap Summary\n\n';
+            roadmapData.forEach(milestone => {
+                const completed = milestone.tasks.filter(t => t.completed).length;
+                summary += `${milestone.title}: ${completed}/${milestone.tasks.length} completed\n`;
+                milestone.tasks.forEach(task => {
+                    summary += `  - [${task.completed ? 'x' : ' '}] ${task.text}\n`;
+                });
+                summary += '\n';
+            });
+            const blob = new Blob([summary], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'dcpip-roadmap.txt';
+            a.click();
+        });
+    </script>
+</body>
+</html>
