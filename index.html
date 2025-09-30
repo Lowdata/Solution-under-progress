@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Content Provenance & Integrity Protocol Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Slate & Sky -->
+    <!-- Application Structure Plan: The application is structured as a single-page, scrolling dashboard to guide the user through a narrative journey. It starts with the core problem, introduces the D-CPIP solution, breaks down its technological pillars into interactive components, visualizes the protocol's workflow, addresses challenges, and concludes with a comparative analysis chart. This top-down, thematic structure was chosen over a simple list to make the complex topic more digestible and engaging for a developer audience, facilitating exploration rather than just passive reading. Navigation is provided for quick access, but the primary design encourages a sequential discovery process. -->
+    <!-- Visualization & Content Choices: 
+        - Problem Illustration: Report Info -> Activist video misuse. Goal -> Inform. Viz/Presentation -> HTML/CSS diagram. Interaction -> None. Justification -> A simple, static visual quickly establishes the core problem context. Method -> Tailwind CSS.
+        - Core Technologies: Report Info -> Blockchain, Watermarking, etc. Goal -> Organize/Inform. Viz/Presentation -> Interactive Cards. Interaction -> Click to reveal details. Justification -> Breaks down complex technologies into manageable, user-driven segments. Method -> JS/HTML/CSS.
+        - Protocol Workflow: Report Info -> D-CPIP validation steps. Goal -> Organize/Explain. Viz/Presentation -> Interactive Flowchart. Interaction -> Hover to highlight steps. Justification -> Visualizes a complex process, making it easier to follow than text alone. Method -> JS/HTML/CSS.
+        - Challenges: Report Info -> Legal, Ethical, Adoption issues. Goal -> Organize/Inform. Viz/Presentation -> Accordion UI. Interaction -> Click to expand/collapse. Justification -> Condenses lengthy text into a clean, organized format. Method -> JS/HTML/CSS.
+        - Comparative Analysis: Report Info -> Implied superiority of D-CPIP. Goal -> Compare. Viz/Presentation -> Bar Chart. Interaction -> Hover for tooltips. Justification -> Provides a quantitative, at-a-glance summary of the solution's benefits versus alternatives. Library -> Chart.js (Canvas).
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active, .nav-link:hover {
+            color: #0ea5e9;
+            border-bottom-color: #0ea5e9;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .flow-step {
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .flow-step:hover {
+            background-color: #e0f2fe;
+            border-color: #0ea5e9;
+        }
+        .accordion-button.open .accordion-icon {
+            transform: rotate(180deg);
+        }
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 500px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <header class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-sky-600">D-CPIP Explorer</h1>
+            <div class="hidden md:flex space-x-8">
+                <a href="#problem" class="nav-link font-medium pb-1">The Problem</a>
+                <a href="#solution" class="nav-link font-medium pb-1">The Solution</a>
+                <a href="#workflow" class="nav-link font-medium pb-1">Workflow</a>
+                <a href="#challenges" class="nav-link font-medium pb-1">Challenges</a>
+                <a href="#analysis" class="nav-link font-medium pb-1">Analysis</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        <section class="text-center mb-20">
+            <h2 class="text-4xl md:text-5xl font-bold tracking-tight mb-4">Securing Digital Truth</h2>
+            <p class="text-lg text-slate-600 max-w-3xl mx-auto">An interactive exploration of the Digital Content Provenance and Integrity Protocol (D-CPIP)—a proposed framework to combat video manipulation and misinformation.</p>
+        </section>
+
+        <section id="problem" class="mb-20">
+            <h3 class="text-3xl font-bold text-center mb-2">The Anatomy of Misinformation</h3>
+            <p class="text-slate-600 text-center mb-12 max-w-3xl mx-auto">In today's media landscape, content can be easily downloaded, edited, and re-uploaded out of context, turning legitimate discourse into targeted propaganda. This section illustrates the core problem D-CPIP aims to solve.</p>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
+                    <div class="flex flex-col items-center">
+                        <div class="p-4 bg-green-100 rounded-lg mb-4">
+                            <span class="text-4xl">🎬</span>
+                        </div>
+                        <h4 class="font-bold text-lg">1. Original Content</h4>
+                        <p class="text-slate-500">An activist quotes a comedian's controversial statement to critique it, within a longer, nuanced video.</p>
+                    </div>
+                    <div class="text-5xl text-slate-300 transform -rotate-90 md:rotate-0">➔</div>
+                    <div class="flex flex-col items-center">
+                        <div class="p-4 bg-red-100 rounded-lg mb-4">
+                            <span class="text-4xl">✂️</span>
+                        </div>
+                        <h4 class="font-bold text-lg">2. Malicious Edit</h4>
+                        <p class="text-slate-500">A bad actor downloads the video and edits it, removing all context and leaving only the controversial quote.</p>
+                    </div>
+                    <div class="hidden md:block text-5xl text-slate-300">➔</div>
+                    <div class="block md:hidden col-span-1 text-5xl text-slate-300 transform -rotate-90">➔</div>
+
+                    <div class="flex flex-col items-center md:col-start-3">
+                         <div class="p-4 bg-purple-100 rounded-lg mb-4">
+                            <span class="text-4xl">📢</span>
+                        </div>
+                        <h4 class="font-bold text-lg">3. Propaganda Spread</h4>
+                        <p class="text-slate-500">The altered clip is distributed on social media, falsely portraying the activist as a traitor and creating a false narrative.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="mb-20">
+            <h3 class="text-3xl font-bold text-center mb-2">Pillars of the D-CPIP Solution</h3>
+            <p class="text-slate-600 text-center mb-12 max-w-3xl mx-auto">D-CPIP is not a single piece of software but an ecosystem built on several key technologies. Click on each pillar to learn more about its role in establishing content integrity.</p>
+            <div id="tech-pillars-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            </div>
+        </section>
+
+        <section id="workflow" class="mb-20">
+            <h3 class="text-3xl font-bold text-center mb-2">The D-CPIP Verification Workflow</h3>
+            <p class="text-slate-600 text-center mb-12 max-w-3xl mx-auto">This flowchart illustrates how D-CPIP would verify content from creation to playback, creating a chain of trust that is difficult to break without detection. Hover over each step for details.</p>
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200">
+                <div class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0 md:space-x-4">
+                    <div class="flow-step w-full md:w-1/4 p-4 border-2 border-slate-200 rounded-lg text-center">
+                        <div class="text-3xl mb-2">1. 📤</div>
+                        <h4 class="font-semibold">Content Creation</h4>
+                        <p class="text-sm text-slate-500">Creator finalizes video. A unique cryptographic hash (a digital fingerprint) of the file is generated.</p>
+                    </div>
+                    <div class="text-2xl text-slate-400 font-light">→</div>
+                    <div class="flow-step w-full md:w-1/4 p-4 border-2 border-slate-200 rounded-lg text-center">
+                        <div class="text-3xl mb-2">2. 🔗</div>
+                        <h4 class="font-semibold">Ledger Registration</h4>
+                        <p class="text-sm text-slate-500">The hash, creator metadata, and timestamp are registered on a distributed ledger, creating an immutable record.</p>
+                    </div>
+                    <div class="text-2xl text-slate-400 font-light">→</div>
+                    <div class="flow-step w-full md:w-1/4 p-4 border-2 border-slate-200 rounded-lg text-center">
+                        <div class="text-3xl mb-2">3. 📺</div>
+                        <h4 class="font-semibold">Platform Playback</h4>
+                        <p class="text-sm text-slate-500">A user presses play. The D-CPIP compliant player calculates the hash of the video it's about to stream.</p>
+                    </div>
+                    <div class="text-2xl text-slate-400 font-light">→</div>
+                    <div class="flow-step w-full md:w-1/4 p-4 border-2 border-slate-200 rounded-lg text-center">
+                        <div class="text-3xl mb-2">4. ✅/❌</div>
+                        <h4 class="font-semibold">Verification</h4>
+                        <p class="text-sm text-slate-500">The player compares its calculated hash with the original hash on the ledger. A match means it's authentic. A mismatch triggers a warning.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="challenges" class="mb-20">
+            <h3 class="text-3xl font-bold text-center mb-2">Deployment & Adoption Challenges</h3>
+             <p class="text-slate-600 text-center mb-12 max-w-3xl mx-auto">A protocol is only as strong as its adoption. The path to a secure content ecosystem involves overcoming significant technical, legal, and social hurdles.</p>
+            <div id="challenges-accordion" class="max-w-4xl mx-auto space-y-4">
+            </div>
+        </section>
+
+        <section id="analysis" class="mb-12">
+            <h3 class="text-3xl font-bold text-center mb-2">Comparative Analysis</h3>
+            <p class="text-slate-600 text-center mb-12 max-w-3xl mx-auto">How does the proposed D-CPIP stack up against current content moderation techniques and a complete lack of protection? This chart compares key integrity metrics.</p>
+            <div class="bg-white p-4 sm:p-8 rounded-xl shadow-lg border border-slate-200">
+                <div class="chart-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-slate-800 text-slate-400 mt-20">
+        <div class="container mx-auto px-6 py-8 text-center">
+            <p>D-CPIP Explorer: An Interactive Application</p>
+            <p class="text-sm">Built to demonstrate a potential solution for digital content integrity.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const techPillarsData = [
+                {
+                    icon: '🔗',
+                    title: 'Blockchain & DLT',
+                    short: 'Creates an immutable, time-stamped public record of content provenance.',
+                    full: 'Utilizing Distributed Ledger Technology (DLT), D-CPIP creates a non-repudiable record of a video\'s original hash and publication details. This acts like a digital birth certificate, proving when a piece of content was created and by whom, making unauthorized claims of ownership or origin verifiable.'
+                },
+                {
+                    icon: '💧',
+                    title: 'Watermarking & Hashing',
+                    short: 'Embeds robust, invisible signatures into video to survive editing.',
+                    full: 'State-of-the-art perceptual hashing and cryptographic watermarking create digital signatures that are resilient to common manipulations like compression, cropping, or splicing. If a clip is used, its embedded watermark can still link back to the original, authentic source.'
+                },
+                {
+                    icon: '🛡️',
+                    title: 'Secure Protocol & Validation',
+                    short: 'Ensures content is verified against its original record before playback.',
+                    full: 'D-CPIP proposes a "Verification Handshake" where a compliant player on a social media site queries the DLT for the content\'s original hash before playback. If the hash of the streamed content doesn\'t match the immutable record, playback is halted or a prominent warning is displayed to the viewer.'
+                },
+                {
+                    icon: '🤖',
+                    title: 'Deepfake Countermeasures',
+                    short: 'Integrates AI detection to flag non-human manipulations.',
+                    full: 'The protocol can be extended to authenticate AI-generated content by requiring the AI model\'s signature. A "Deepfake Rejection Module" would use machine learning to compare a video\'s characteristics against the DLT-registered original, flagging manipulations that are inconsistent with authentic edits.'
+                }
+            ];
+
+            const challengesData = [
+                {
+                    title: 'Standardization and Platform Adoption',
+                    content: 'For D-CPIP to be effective, it needs to become a universal standard. This requires endorsement from bodies like MPEG and, crucially, adoption by major platforms like YouTube, Meta, and X. The primary incentive for these platforms is increased user trust and potential protection from liability regarding misinformation.'
+                },
+                {
+                    title: 'Scalability and Cost',
+                    content: 'Registering every piece of content on a blockchain could be slow and expensive. The protocol must rely on efficient hashing (storing only a small fingerprint, not the whole file) and potentially use less energy-intensive "Layer 2" solutions to remain scalable for billions of daily uploads.'
+                },
+                {
+                    title: 'Legal and Ethical Frameworks',
+                    content: 'Who governs the D-CPIP ledger? What happens when content that is illegal in one country but legal in another is registered? A global legal framework is needed to address censorship, fair use, and the right to be forgotten, ensuring the protocol isn\'t used to suppress dissent.'
+                },
+                {
+                    title: 'User Experience and Accessibility',
+                    content: 'The verification process must be invisible and instantaneous to the end-user. Any friction, such as slow loading times or confusing warnings, will hinder adoption. The system must work seamlessly in the background without degrading the user experience.'
+                }
+            ];
+
+            const techPillarsContainer = document.getElementById('tech-pillars-container');
+            techPillarsData.forEach(pillar => {
+                const card = document.createElement('div');
+                card.className = 'card bg-white rounded-xl shadow-lg border border-slate-200 p-6 cursor-pointer';
+                card.innerHTML = `
+                    <div class="text-4xl mb-4">${pillar.icon}</div>
+                    <h4 class="font-bold text-xl mb-2">${pillar.title}</h4>
+                    <p class="text-slate-500">${pillar.short}</p>
+                    <div class="full-text hidden mt-4 text-slate-600 text-sm">${pillar.full}</div>
+                `;
+                techPillarsContainer.appendChild(card);
+
+                card.addEventListener('click', () => {
+                    const fullText = card.querySelector('.full-text');
+                    const shortText = card.querySelector('p');
+                    const isExpanded = !fullText.classList.contains('hidden');
+                    
+                    if (isExpanded) {
+                        fullText.classList.add('hidden');
+                        shortText.classList.remove('hidden');
+                    } else {
+                        fullText.classList.remove('hidden');
+                        shortText.classList.add('hidden');
+                    }
+                });
+            });
+
+            const challengesAccordion = document.getElementById('challenges-accordion');
+            challengesData.forEach(item => {
+                const accordionItem = document.createElement('div');
+                accordionItem.className = 'bg-white border border-slate-200 rounded-lg overflow-hidden';
+                accordionItem.innerHTML = `
+                    <button class="accordion-button w-full flex justify-between items-center text-left p-5 font-semibold text-slate-700 hover:bg-slate-50">
+                        <span>${item.title}</span>
+                        <span class="accordion-icon text-sky-500 text-2xl font-light transform transition-transform">▾</span>
+                    </button>
+                    <div class="accordion-content hidden p-5 pt-0 text-slate-600">
+                        <p>${item.content}</p>
+                    </div>
+                `;
+                challengesAccordion.appendChild(accordionItem);
+
+                const button = accordionItem.querySelector('.accordion-button');
+                const content = accordionItem.querySelector('.accordion-content');
+                button.addEventListener('click', () => {
+                    button.classList.toggle('open');
+                    content.classList.toggle('hidden');
+                });
+            });
+
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            const comparisonChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Tamper Resistance', 'Verifiability', 'Scalability', 'Adoption Cost'],
+                    datasets: [
+                        {
+                            label: 'No Protection',
+                            data: [1, 1, 10, 10],
+                            backgroundColor: '#e2e8f0',
+                            borderColor: '#cbd5e1',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Current Moderation',
+                            data: [3, 2, 7, 6],
+                            backgroundColor: '#fca5a5',
+                            borderColor: '#ef4444',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'D-CPIP Protocol',
+                            data: [9, 9, 6, 4],
+                            backgroundColor: '#7dd3fc',
+                            borderColor: '#0ea5e9',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: {
+                                display: true,
+                                text: 'Effectiveness / Cost Score (1=Low, 10=High)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Content Integrity Method Comparison'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.x !== null) {
+                                        label += context.parsed.x + '/10';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
