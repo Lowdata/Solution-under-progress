@@ -1,0 +1,7 @@
+# robots.txt - Allow all web crawlers and AI bots to access this site
+# This file explicitly allows all bots including ChatGPT, Claude, DeepSeek, and others
+
+User-agent: *
+Allow: /
+
+# No restrictions - all bots are welcome to crawl this site
